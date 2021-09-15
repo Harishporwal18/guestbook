@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guest {% endblock %}
+{% block head_css %}
+
+    <!-- Copy CSS from https://getbootstrap.com/docs/4.4/getting-started/introduction/#css -->
+{% endblock %}
+{% block head_js %}
+   <!-- Copy JavaScript from https://getbootstrap.com/docs/4.4/getting-started/introduction/#js -->
+{% endblock %}
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+<div class="container">
+    {% if app.user %}
+        <div class="mb-3">
+            <a class="btn float-right" href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+{{ form(form) }}
+</div>
+
+{% endblock %}

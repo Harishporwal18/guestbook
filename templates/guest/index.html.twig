@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guest {% endblock %}
+{% block head_css %}
+
+    <!-- Copy CSS from https://getbootstrap.com/docs/4.4/getting-started/introduction/#css -->
+{% endblock %}
+{% block head_js %}
+   <!-- Copy JavaScript from https://getbootstrap.com/docs/4.4/getting-started/introduction/#js -->
+{% endblock %}
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+<div class="container">
+    {% if app.user %}
+        <div class="btn float-right">
+            <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+            {% if is_granted('ROLE_ADMIN') %}
+            <th scope="col">Update Status</th>
+            <th scope="col">Delete</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for guest in guestlist  %}
+        <tr>
+
+            <td>{{ guest.id }}</td>
+            <td> {{ guest.name }}</td>
+            <td>{{ guest.status }}</td>
+            {% if is_granted('ROLE_ADMIN') %}
+            <td>
+                {% if  guest.status != 'approved'  %}
+                <a href="{{ path('guestupdatestatus',{id: guest.id}) }}">Approve Guest</a>
+                {% endif %}
+            </td>
+
+            <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="text-danger" href="{{ path('guestdelete',{id: guest.id}) }}">Delete</a>
+                {% endif %}
+            </td>
+            {% endif %}
+
+
+        </tr>
+       {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

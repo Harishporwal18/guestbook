@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Registration!{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+<div class="container">
+    <div class="row">
+            <a class="btn btn-success float-md-right " href="{{ path('app_login') }}">
+                Login
+            </a>
+    </div>
+    {{ form(form) }}
+</div>
+{% endblock %}
