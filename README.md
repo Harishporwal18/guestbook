@@ -43,7 +43,10 @@
 - Admin can approve and delete Guest entries
  ![image](https://user-images.githubusercontent.com/11938460/133547170-0e7462c2-5ed4-4c8a-a225-737c23f191b8.png)
  - Aprrove Guest
- -![image](https://user-images.githubusercontent.com/11938460/133547252-f006c8bb-25fa-4e65-b4d7-473b7541e4b6.png)
+ ![image](https://user-images.githubusercontent.com/11938460/133547252-f006c8bb-25fa-4e65-b4d7-473b7541e4b6.png)
+ - Delete Guest 
+  ![image](https://user-images.githubusercontent.com/11938460/133581571-7501b9ae-e2d8-44a5-af48-ffaef61f080a.png)
+
 
 
 			
