@@ -6,6 +6,7 @@
     <!-- Copy CSS from https://getbootstrap.com/docs/4.4/getting-started/introduction/#css -->
 {% endblock %}
 {% block head_js %}
+
    <!-- Copy JavaScript from https://getbootstrap.com/docs/4.4/getting-started/introduction/#js -->
 {% endblock %}
 {% block body %}
@@ -51,7 +52,7 @@
         <tr>
 
             <td> {{ key+1 }}</td>
-            <td> {{ guest.name }}</td>
+            <td> <a href="{{ path('guestedit',{id: guest.id}) }}"> {{ guest.name }} </a></td>
             <td>{{ guest.author }}</td>
             <td>{{ guest.status }}</td>
             {% if is_granted('ROLE_ADMIN') %}
@@ -63,7 +64,8 @@
 
             <td>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a class="btn btn-danger" href="{{ path('guestdelete',{id: guest.id}) }}">Delete</a>
+                   <!-- <a class="btn btn-danger" href="{{ path('guestdelete',{id: guest.id}) }}">Delete</a>-->
+                    <a href="#myModal"  data-toggle="modal" class="modalpopup" data-id="{{ guest.id}}">Delete</a>
                 {% endif %}
             </td>
             {% endif %}
@@ -75,6 +77,26 @@
     </table>
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
+    </div>
+
+
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header flex-column">
+                    <h4 class="modal-title w-100">Are you sure?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you really want to delete these records? This process cannot be undone.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger" id="deletebtn">Delete</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

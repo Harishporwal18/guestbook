@@ -58,7 +58,7 @@ class GuestController extends AbstractController
     }
 
     /**
-     * Createing a new Guest entry
+     * Creating a new Guest entry
      * @Route("/create", name="create")
      */
     public function create(Request $request)
@@ -84,6 +84,30 @@ class GuestController extends AbstractController
         ]);
     }
 
+    /**
+     * Editing the guest records
+     * @Route("/edit/{id}", name="edit")
+     */
+    public function edit(Request $request, GuestBook $guest)
+    {
+        $form = $this->createForm(GuestType::class, $guest);
+        $form->handleRequest($request);
+        $form->getErrors();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($guest);
+            $em->flush();
+
+            $this->addFlash('success', $guest->getName().' Updated');
+            return $this->redirect($this->generateUrl('guestlist'));
+        }
+
+
+        return $this->render('guest/create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+    
     /**
      * Updating the Guest status from Pending to Approved (access only to ROLE_ADMIN)
      * @Route("/updatestatus/{id}", name="updatestatus")
