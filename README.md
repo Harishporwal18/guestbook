@@ -8,13 +8,12 @@
 		- Change directory to new guestbook directory and run composer install(composer will install all the dependencies)   
 		- open .env and add database connection and name.   
 		- DATABASE_URL="mysql://root:@127.0.0.1:3306/book?serverVersion=5.7"   
-		- run the command to create database php bin/console doctrine:create:database    
-		- php bin/console doctrine:schema:update
-		 run the below command to run all migrations    
+		- run the command to create database php bin/console doctrine:database:create  
+		- php bin/console doctrine:schema:update --force
+		 run the below command to run all migrations (For new repo database schema does the update, for changes in existing run migrations)   
 		- php bin/console make:migration php bin/console doctrine:migrations:migrate    
 ## Step 3     
-	 Create Admin user with fixtures
-	   - php bin/console make:fixtures    
+	 Create Admin user with fixtures   
 	   - php bin/console doctrine:fixtures:load --append
 ## step 4
 	Run the program
