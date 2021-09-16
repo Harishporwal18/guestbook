@@ -17,6 +17,9 @@ security:
         main:
             anonymous: lazy
             provider: app_user_provider
+            form_login:
+                default_target_path: app_login
+                login_path: app_login
             guard:
                 authenticators:
                     - App\Security\CustomAuthenticator
@@ -37,6 +40,5 @@ security:
     access_control:
       - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
       - { path: ^/guest/create, roles: [ROLE_ADMIN,ROLE_USER] }
-      - { path: ^/guest, roles: ROLE_ADMIN }
 
      # - { path: ^/guestguest/, roles: ROLE_ADMIN }

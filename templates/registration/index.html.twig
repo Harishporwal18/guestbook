@@ -6,6 +6,11 @@
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">
             {{ message }}
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+
         </div>
     {% endfor %}
 
@@ -15,6 +20,21 @@
                 Login
             </a>
     </div>
-    {{ form(form) }}
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    <div class="card border-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_row(form.email) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_row(form.password) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
 </div>
 {% endblock %}

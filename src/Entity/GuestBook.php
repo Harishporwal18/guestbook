@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\GuestBookRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\GuestBookRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class GuestBook
 {
+
+    const APPROVED_STATUS = 'approved';
+    const PENDING_STATUS = 'pending';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -19,7 +22,8 @@ class GuestBook
     private $id;
 
     /**
-     * @Assert\NotBlank
+     * @Assert\NotBlank( message = "Guest Name cannot be blank", groups={"guestgroup"})
+     * @Assert\Length(min=4,max=30,minMessage="Name should be minimum {{ limit }} characters",maxMessage="Name cannot exceeds {{ limit }} characters",groups={"guestgroup"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -28,6 +32,18 @@ class GuestBook
      * @ORM\Column(type="string", length=255)
      */
     private $status;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="guestBooks")
+     */
+    private $user;
+
+    /**
+     * @Assert\NotBlank( message = "Author cannot be blank", groups={"guestgroup"})
+     * @Assert\Length(min=4,max=30,minMessage="Author should be minimum {{ limit }} characters",maxMessage="Author cannot exceeds {{ limit }} characters",groups={"guestgroup"})
+     * @ORM\Column(type="string", length=255)
+     */
+    private $author;
 
     public function getId(): ?int
     {
@@ -54,6 +70,30 @@ class GuestBook
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(string $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

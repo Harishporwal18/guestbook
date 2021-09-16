@@ -12,19 +12,32 @@
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">
             {{ message }}
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
         </div>
     {% endfor %}
 <div class="container">
+    <div class="row">
+        <a class="btn btn-success float-md-right " href="{{ path('guestcreate') }}">
+            New Guest
+        </a>
+    </div>
     {% if app.user %}
         <div class="btn float-right">
             <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
+    <div class="count">
+      No. of guest  : <b>{{ pagination.getTotalItemCount }}</b>
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Name</th>
+            <th scope="col">Author</th>
             <th scope="col">Status</th>
             {% if is_granted('ROLE_ADMIN') %}
             <th scope="col">Update Status</th>
@@ -33,22 +46,24 @@
         </tr>
         </thead>
         <tbody>
-        {% for guest in guestlist  %}
+        {% set i = 0   %}
+        {% for  key, guest in pagination   %}
         <tr>
 
-            <td>{{ guest.id }}</td>
+            <td> {{ key+1 }}</td>
             <td> {{ guest.name }}</td>
+            <td>{{ guest.author }}</td>
             <td>{{ guest.status }}</td>
             {% if is_granted('ROLE_ADMIN') %}
             <td>
                 {% if  guest.status != 'approved'  %}
-                <a href="{{ path('guestupdatestatus',{id: guest.id}) }}">Approve Guest</a>
+                <a class="btn btn-success" href="{{ path('guestupdatestatus',{id: guest.id}) }}">Approve Guest</a>
                 {% endif %}
             </td>
 
             <td>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a class="text-danger" href="{{ path('guestdelete',{id: guest.id}) }}">Delete</a>
+                    <a class="btn btn-danger" href="{{ path('guestdelete',{id: guest.id}) }}">Delete</a>
                 {% endif %}
             </td>
             {% endif %}
@@ -58,6 +73,9 @@
        {% endfor %}
         </tbody>
     </table>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 </div>
 
 {% endblock %}

@@ -14,9 +14,23 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class GuestBookRepository extends ServiceEntityRepository
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, GuestBook::class);
+    }
+
+    /**
+     * Find all the Guest under given user
+     * @param $value
+     * @return GuestBook()
+     */
+    public function findGuestBookByUser($value)
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.user = :val')
+            ->setParameter('val', $value)
+            ->getQuery();
     }
 
     // /**
