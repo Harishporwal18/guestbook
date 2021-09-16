@@ -25,8 +25,8 @@
         </a>
     </div>
     {% if app.user %}
-        <div class="btn float-right">
-            <a href="{{ path('app_logout') }}">Logout</a>
+        <div class="mb-3">
+            <a class="btn btn-danger float-right" href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
     <div class="count">

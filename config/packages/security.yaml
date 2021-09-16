@@ -17,12 +17,12 @@ security:
         main:
             anonymous: lazy
             provider: app_user_provider
-            form_login:
-                default_target_path: app_login
-                login_path: app_login
             guard:
                 authenticators:
                     - App\Security\CustomAuthenticator
+            form_login:
+                  login_path: /login
+                  always_use_default_target_path: true
             logout:
                 path: app_logout
                 target: app_login

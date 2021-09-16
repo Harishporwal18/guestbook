@@ -35,20 +35,26 @@ class GuestController extends AbstractController
      */
     public function index(GuestBookRepository $bookRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        if ($this->getUser()->getRoles()[0] == 'ROLE_USER') {
-            $guests = $bookRepository->findGuestBookByUser($this->getUser()->getId());
-        } else {
-            $guests = $bookRepository->findAll();
+        if($this->getUser()){
+            if ($this->getUser()->getRoles()[0] == 'ROLE_USER') {
+                $guests = $bookRepository->findGuestBookByUser($this->getUser()->getId());
+            } else {
+                $guests = $bookRepository->findAll();
+            }
+            $pagination = $paginator->paginate(
+                $guests, /* query NOT result */
+                $request->query->getInt('page', 1), /*page number*/
+                10 /*limit per page*/
+            );
+            return $this->render('guest/index.html.twig', [
+                'guestlist' => $guests,
+                'pagination' => $pagination,
+            ]);
         }
-        $pagination = $paginator->paginate(
-            $guests, /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            10 /*limit per page*/
-        );
-        return $this->render('guest/index.html.twig', [
-            'guestlist' => $guests,
-            'pagination' => $pagination,
-        ]);
+        else{
+            return $this->redirect($this->generateUrl('app_login'));
+        }
+
     }
 
     /**

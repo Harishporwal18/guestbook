@@ -20,9 +20,14 @@
     {% endfor %}
 
 <div class="container">
+    <div class="row">
+        <a class="btn btn-success float-md-left"  onClick="window.history.back();">
+           Go Back
+        </a>
+        </div>
     {% if app.user %}
         <div class="mb-3">
-            <a class="btn float-right" href="{{ path('app_logout') }}">Logout</a>
+            <a class="btn btn-danger float-right" href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
